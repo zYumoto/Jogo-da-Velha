@@ -1,0 +1,206 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        char[] a = { ' ', ' ', ' ' };
+        char[] b = { ' ', ' ', ' ' };
+        char[] c = { ' ', ' ', ' ' };
+        char[] h1 = new char[3];
+        char[] h2 = new char[3];
+        char[] h3 = new char[3];
+        char[] d1 = new char[3];
+        char[] d2 = new char[3];
+        char m = 'X';
+
+        int i = 0, j;
+        int ap1, ap2, ap3, ap4, ap5, ap6, ap7, ap8;
+        int bp1, bp2, bp3, bp4, bp5, bp6, bp7, bp8;
+
+        Console.WriteLine("Vamos jogar jogo da velha!!");
+        Console.WriteLine("Player vs Player");
+
+        Console.WriteLine("\nVocê começa, escolha a posição para marcar 'X': ");
+        Console.WriteLine("\n\n");
+        Console.WriteLine("  A   B   C");
+        Console.WriteLine("    |   |   1");
+        Console.WriteLine(" ---|---|---");
+        Console.WriteLine("    |   |   2");
+        Console.WriteLine(" ---|---|---");
+        Console.WriteLine("    |   |   3");
+        Console.Write("Posição: ");
+
+        do
+        {
+            string input = Console.ReadLine().ToLower();
+            char row = input[0];
+            char col = input[1];
+
+            if (i % 2 == 0)
+            {
+                m = 'X';
+            }
+            else
+            {
+                m = 'O';
+            }
+
+            switch (row)
+            {
+                case 'a':
+                    switch (col)
+                    {
+                        case '1':
+                            a[0] = m;
+                            h1[0] = m;
+                            d1[0] = m;
+                            break;
+                        case '2':
+                            a[1] = m;
+                            h2[0] = m;
+                            break;
+                        case '3':
+                            a[2] = m;
+                            h3[0] = m;
+                            d2[2] = m;
+                            break;
+                    }
+                    break;
+                case 'b':
+                    switch (col)
+                    {
+                        case '1':
+                            b[0] = m;
+                            h1[1] = m;
+                            break;
+                        case '2':
+                            b[1] = m;
+                            h2[1] = m;
+                            d1[1] = m;
+                            d2[1] = m;
+                            break;
+                        case '3':
+                            b[2] = m;
+                            h3[1] = m;
+                            break;
+                    }
+                    break;
+                case 'c':
+                    switch (col)
+                    {
+                        case '1':
+                            c[0] = m;
+                            h1[2] = m;
+                            d2[0] = m;
+                            break;
+                        case '2':
+                            c[1] = m;
+                            h2[2] = m;
+                            break;
+                        case '3':
+                            c[2] = m;
+                            h3[2] = m;
+                            d1[2] = m;
+                            break;
+                    }
+                    break;
+            }
+
+            Console.WriteLine("\n\nPróximo jogador!");
+            Console.WriteLine("  A   B   C");
+            Console.WriteLine($"  {a[0]} | {b[0]} | {c[0]} 1");
+            Console.WriteLine(" ---|---|---");
+            Console.WriteLine($"  {a[1]} | {b[1]} | {c[1]} 2");
+            Console.WriteLine(" ---|---|---");
+            Console.WriteLine($"  {a[2]} | {b[2]} | {c[2]} 3");
+            Console.Write("Posição: ");
+
+            ap1 = 0; ap2 = 0; ap3 = 0; ap4 = 0; ap5 = 0; ap6 = 0; ap7 = 0; ap8 = 0;
+            bp1 = 0; bp2 = 0; bp3 = 0; bp4 = 0; bp5 = 0; bp6 = 0; bp7 = 0; bp8 = 0;
+
+            for (j = 0; j < 3; j++)
+            {
+                if (a[j] == 'X')
+                {
+                    ap1++;
+                }
+                else if (a[j] == 'O')
+                {
+                    bp1++;
+                }
+                if (b[j] == 'X')
+                {
+                    ap2++;
+                }
+                else if (b[j] == 'O')
+                {
+                    bp2++;
+                }
+                if (c[j] == 'X')
+                {
+                    ap3++;
+                }
+                else if (c[j] == 'O')
+                {
+                    bp3++;
+                }
+                if (d1[j] == 'X')
+                {
+                    ap4++;
+                }
+                else if (d1[j] == 'O')
+                {
+                    bp4++;
+                }
+                if (d2[j] == 'X')
+                {
+                    ap5++;
+                }
+                else if (d2[j] == 'O')
+                {
+                    bp5++;
+                }
+                if (h1[j] == 'X')
+                {
+                    ap6++;
+                }
+                else if (h1[j] == 'O')
+                {
+                    bp6++;
+                }
+                if (h2[j] == 'X')
+                {
+                    ap7++;
+                }
+                else if (h2[j] == 'O')
+                {
+                    bp7++;
+                }
+                if (h3[j] == 'X')
+                {
+                    ap8++;
+                }
+                else if (h3[j] == 'O')
+                {
+                    bp8++;
+                }
+            }
+
+            if (ap1 == 3 || ap2 == 3 || ap3 == 3 || ap4 == 3 || ap5 == 3 || ap6 == 3 || ap7 == 3 || ap8 == 3)
+            {
+                Console.WriteLine("\n\n\t-----------");
+                Console.WriteLine("Player 1 ganhou!!");
+                i = 10;
+            }
+            else if (bp1 == 3 || bp2 == 3 || bp3 == 3 || bp4 == 3 || bp5 == 3 || bp6 == 3 || bp7 == 3 || bp8 == 3)
+            {
+                Console.WriteLine("\n\n\t-----------");
+                Console.WriteLine("Player 2 ganhou!!");
+                i = 10;
+            }
+
+            i++;
+        } while (i <= 9);
+    }
+}
