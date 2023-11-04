@@ -19,24 +19,10 @@ class Program
         int bp1, bp2, bp3, bp4, bp5, bp6, bp7, bp8;
 
         Console.WriteLine("Vamos jogar jogo da velha!!");
-        Console.WriteLine("Player vs Player");
-
         Console.WriteLine("\nVocê começa, escolha a posição para marcar 'X': ");
-        Console.WriteLine("\n\n");
-        Console.WriteLine("  A   B   C");
-        Console.WriteLine("    |   |   1");
-        Console.WriteLine(" ---|---|---");
-        Console.WriteLine("    |   |   2");
-        Console.WriteLine(" ---|---|---");
-        Console.WriteLine("    |   |   3");
-        Console.Write("Posição: ");
 
         do
         {
-            string input = Console.ReadLine().ToLower();
-            char row = input[0];
-            char col = input[1];
-
             if (i % 2 == 0)
             {
                 m = 'X';
@@ -46,67 +32,6 @@ class Program
                 m = 'O';
             }
 
-            switch (row)
-            {
-                case 'a':
-                    switch (col)
-                    {
-                        case '1':
-                            a[0] = m;
-                            h1[0] = m;
-                            d1[0] = m;
-                            break;
-                        case '2':
-                            a[1] = m;
-                            h2[0] = m;
-                            break;
-                        case '3':
-                            a[2] = m;
-                            h3[0] = m;
-                            d2[2] = m;
-                            break;
-                    }
-                    break;
-                case 'b':
-                    switch (col)
-                    {
-                        case '1':
-                            b[0] = m;
-                            h1[1] = m;
-                            break;
-                        case '2':
-                            b[1] = m;
-                            h2[1] = m;
-                            d1[1] = m;
-                            d2[1] = m;
-                            break;
-                        case '3':
-                            b[2] = m;
-                            h3[1] = m;
-                            break;
-                    }
-                    break;
-                case 'c':
-                    switch (col)
-                    {
-                        case '1':
-                            c[0] = m;
-                            h1[2] = m;
-                            d2[0] = m;
-                            break;
-                        case '2':
-                            c[1] = m;
-                            h2[2] = m;
-                            break;
-                        case '3':
-                            c[2] = m;
-                            h3[2] = m;
-                            d1[2] = m;
-                            break;
-                    }
-                    break;
-            }
-
             Console.WriteLine("\n\nPróximo jogador!");
             Console.WriteLine("  A   B   C");
             Console.WriteLine($"  {a[0]} | {b[0]} | {c[0]} 1");
@@ -114,7 +39,89 @@ class Program
             Console.WriteLine($"  {a[1]} | {b[1]} | {c[1]} 2");
             Console.WriteLine(" ---|---|---");
             Console.WriteLine($"  {a[2]} | {b[2]} | {c[2]} 3");
-            Console.Write("Posição: ");
+            Console.Write("Informe a linha (1, 2, 3) e a coluna (A, B, C) separadas por espaço: ");
+
+            string input = Console.ReadLine().ToLower();
+            string[] parts = input.Split(' ');
+
+            if (parts.Length != 2 || parts[0] != "1" && parts[0] != "2" && parts[0] != "3" ||
+                parts[1] != "a" && parts[1] != "b" && parts[1] != "c")
+            {
+                Console.WriteLine("Entrada inválida. Use o formato 'linha coluna', por exemplo, '1 a'.");
+                continue;
+            }
+
+            int row = int.Parse(parts[0]) - 1;
+            char col = parts[1][0];
+
+            if (IsSpaceEmpty(row, col, a, b, c))
+            {
+                if (col == 'a')
+                {
+                    switch (row)
+                    {
+                        case 0:
+                            a[0] = m;
+                            h1[0] = m;
+                            d1[0] = m;
+                            break;
+                        case 1:
+                            a[1] = m;
+                            h2[0] = m;
+                            break;
+                        case 2:
+                            a[2] = m;
+                            h3[0] = m;
+                            d2[2] = m;
+                            break;
+                    }
+                }
+                else if (col == 'b')
+                {
+                    switch (row)
+                    {
+                        case 0:
+                            b[0] = m;
+                            h1[1] = m;
+                            break;
+                        case 1:
+                            b[1] = m;
+                            h2[1] = m;
+                            d1[1] = m;
+                            d2[1] = m;
+                            break;
+                        case 2:
+                            b[2] = m;
+                            h3[1] = m;
+                            break;
+                    }
+                }
+                else if (col == 'c')
+                {
+                    switch (row)
+                    {
+                        case 0:
+                            c[0] = m;
+                            h1[2] = m;
+                            d2[0] = m;
+                            break;
+                        case 1:
+                            c[1] = m;
+                            h2[2] = m;
+                            break;
+                        case 2:
+                            c[2] = m;
+                            h3[2] = m;
+                            d1[2] = m;
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Espaço já preenchido. Escolha outra posição.");
+                continue;
+            }
 
             ap1 = 0; ap2 = 0; ap3 = 0; ap4 = 0; ap5 = 0; ap6 = 0; ap7 = 0; ap8 = 0;
             bp1 = 0; bp2 = 0; bp3 = 0; bp4 = 0; bp5 = 0; bp6 = 0; bp7 = 0; bp8 = 0;
@@ -202,5 +209,21 @@ class Program
 
             i++;
         } while (i <= 9);
+    }
+    static bool IsSpaceEmpty(int row, char col, char[] a, char[] b, char[] c)
+    {
+        if (col == 'a')
+        {
+            return a[row] == ' ';
+        }
+        else if (col == 'b')
+        {
+            return b[row] == ' ';
+        }
+        else if (col == 'c')
+        {
+            return c[row] == ' ';
+        }
+        return false;
     }
 }
